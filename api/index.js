@@ -1,8 +1,8 @@
 /* tslint:disable:no-console */
-const {
-  IgApiClient,
-  IgLoginTwoFactorRequiredError,
-} = require("instagram-private-api");
+const {  IgApiClient,
+  IgLoginTwoFactorRequiredError,} = require("instagram-private-api");
+
+const cors = require ("cors");
 const express = require("express");
 const Bluebird = require("bluebird");
 
@@ -12,10 +12,10 @@ app.use(express.json());
 
 app.use(cors());
 
-app.get("/api/insta", async (req, res) => {
+app.get("/api/insta/", async (req, res) => {
 
-  const username = req.query.user;
-  const pass = req.query.pass;
+  const username = req.body.user;
+  const pass = req.body.pass;
 
   const ig = new IgApiClient();
   ig.state.generateDevice(username);
@@ -31,11 +31,13 @@ app.get("/api/insta", async (req, res) => {
       verificationCode: "000000",
     });
   });
-  const accountDetails = await ig.user.info(auth.pk).json();
+  const accountDetails = await ig.user.info(auth.pk);
   res.json(accountDetails);
-    console.log(accountDetails);
+  console.log(accountDetails);
 });
 
-const port = process.env.PORT || 3000;
+//process.env.PORT
+
+const port = 3001;
 
 app.listen(port);
