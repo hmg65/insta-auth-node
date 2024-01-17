@@ -18,7 +18,9 @@ app.post("/api/insta/", async (req, res) => {
   const pass = req.body.pass;
 
   const ig = new IgApiClient();
+
   ig.state.generateDevice(username);
+
   const auth = await Bluebird.try(() =>
     ig.account.login(username, pass)
   ).catch(IgLoginTwoFactorRequiredError, (err) => {
@@ -31,8 +33,12 @@ app.post("/api/insta/", async (req, res) => {
       verificationCode: "000000",
     });
   });
+
   const accountDetails = await ig.user.info(auth.pk);
+
+  res.set("Access-Control-Allow-Origin", "*");
   res.json(accountDetails);
+  
   console.log(accountDetails);
 });
 
