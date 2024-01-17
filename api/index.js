@@ -12,7 +12,7 @@ app.use(express.json());
 
 app.use(cors());
 
-app.get("/api/insta/", async (req, res) => {
+app.post("/api/insta/", async (req, res) => {
 
   const username = req.body.user;
   const pass = req.body.pass;
@@ -35,8 +35,6 @@ app.get("/api/insta/", async (req, res) => {
   res.json(accountDetails);
   console.log(accountDetails);
 });
-
-
 
 const port = process.env.PORT || 3001;
 
