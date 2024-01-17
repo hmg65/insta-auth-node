@@ -37,7 +37,7 @@ app.post("/api/insta/", async (req, res) => {
   const accountDetails = await ig.user.info(auth.pk);
 
   res.set("Access-Control-Allow-Origin", "*");
-  res.set("Access-Control-Allow-Methods", "GET, POST");
+  res.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.json(accountDetails);
 
   console.log(accountDetails);
